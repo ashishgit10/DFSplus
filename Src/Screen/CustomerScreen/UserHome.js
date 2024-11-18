@@ -1,66 +1,91 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Menubar from './Menubar';
 
-export default function UserHome({ navigation }) {
-    const logOut = () => {
-        AsyncStorage.clear();
-        navigation.replace("Login")
+export default function Home() {
+    const navigation = useNavigation();
+    const Menubar = () => {
+        navigation.navigate("Menubar")
     }
-    return (
-        <View style={styles.container}>
-            <Text style={styles.header}>Welcome, Customer</Text>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Submit New Application</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Upload Documents</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Track Application Status</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Notifications</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>View Issued NOCs</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={logOut}>
-                <View style={{ padding: 13, backgroundColor: "white", width: "95%", marginTop: 30, alignSelf: "center", borderRadius: 20, }}>
-                    <View style={{ justifyContent: "center", alignItems: "center", textAlign: "center" }}>
-                        <Text style={{ color: "red", textAlign: "center", paddingLeft: 10, fontSize: 17, fontWeight: "bold" }}>Log Out</Text>
-                    </View>
+    return (<>
+        <View>
+            <TouchableOpacity onPress={Menubar}>
+                <View style={{ backgroundColor: "gray" }}>
+                    <Text style={{ color: "black", fontSize: 25, marginLeft: 20 }}>=</Text>
                 </View>
             </TouchableOpacity>
         </View>
+
+        <View style={styles.container}>
+            <Text style={styles.title}>Welcome to Fire Dept App</Text>
+            <View style={styles.row}>
+                <TouchableOpacity
+                    style={styles.box}
+                    onPress={() => navigation.navigate('NocForm')}
+                >
+                    <Text style={styles.boxText}>Apply for Noc</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.box}
+                    onPress={() => navigation.navigate('TrackStatus')}
+                >
+                    <Text style={styles.boxText}>Track Status</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.row}>
+                <TouchableOpacity
+                    style={styles.box}
+                    onPress={() => navigation.navigate('UploadDocuments')}
+                >
+                    <Text style={styles.boxText}>Issued NOCs</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.box}
+                    onPress={() => navigation.navigate('Notifications')}
+                >
+                    <Text style={styles.boxText}>Report Issues</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    </>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f4f4f4',
+        backgroundColor: '#f8f9fa',
         padding: 20,
     },
-    header: {
+    title: {
         fontSize: 24,
         fontWeight: 'bold',
+        marginBottom: 30,
+        color: '#333',
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginBottom: 20,
     },
-    button: {
-        backgroundColor: '#007bff',
-        padding: 15,
-        borderRadius: 8,
-        marginVertical: 10,
-        width: '100%',
+    box: {
+        width: 150,
+        height: 120,
+        backgroundColor: '#C90000',
+        justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: 10,
+        marginHorizontal: 10,
     },
-    buttonText: {
+    boxText: {
         color: '#fff',
         fontSize: 16,
-        fontWeight: 'bold',
+        textAlign: 'center',
+        fontWeight: "bold"
     },
 });

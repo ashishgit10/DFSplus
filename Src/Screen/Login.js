@@ -38,7 +38,7 @@ export default function Login({ navigation }) {
                     style={[styles.roleButton, role === 'fireDepartment' && styles.selectedRole]}
                     onPress={() => setRole('fireDepartment')}
                 >
-                    <Text style={styles.roleText}>Fire Department</Text>
+                    <Text style={styles.roleText}>Staff</Text>
                 </TouchableOpacity>
             </View>
             <TextInput
