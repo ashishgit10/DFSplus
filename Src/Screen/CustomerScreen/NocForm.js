@@ -118,18 +118,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#f9f9f9',
-   
+
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
-     color:'black'
+    color: 'black'
   },
   label: {
     fontSize: 16,
-     color:'black',
+    color: 'black',
     marginBottom: 8,
   },
   input: {
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   uploadText: {
-   color:'black',
+    color: 'black',
     fontWeight: 'bold',
   },
 });
