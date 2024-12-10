@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, Image, ImageBackground, TouchableOpacity, StatusBar } from 'react-native'
 
-import Icon1 from "react-native-vector-icons/Entypo"
 import Icon2 from "react-native-vector-icons/MaterialIcons"
 import Icon3 from "react-native-vector-icons/Ionicons"
 import Icon4 from "react-native-vector-icons/MaterialIcons"
-import Icon5 from "react-native-vector-icons/MaterialCommunityIcons"
-import Icon6 from "react-native-vector-icons/Ionicons"
-import Icon7 from "react-native-vector-icons/AntDesign"
 
+import Icon7 from "react-native-vector-icons/AntDesign"
+import user from "../../assets/user.png"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { deviceHeight } from '../../Dimensions'
+import { useNavigation } from '@react-navigation/native'
 
 
-const Menubar = ({ navigation }) => {
+const Menubar = () => {
     const [name, setName] = useState('');
-
-
-    const reminder = () => {
-        navigation.navigate("Reminder")
-    }
+    const navigation = useNavigation();
     const logOut = () => {
         AsyncStorage.clear();
         navigation.replace("Login")
@@ -39,18 +34,14 @@ const Menubar = ({ navigation }) => {
 
         getName();
     }, []);
-
-    const chat = () => {
-        navigation.navigate("Chat")
-    }
-    const watch = () => {
-        navigation.navigate("Watch")
-    }
-    const community = () => {
-        navigation.navigate("Community")
-    }
-
-
+    const handleLogout = async () => {
+        try {
+            AsyncStorage.clear();
+            navigation.replace("Login")
+        } catch (err) {
+          console.error('Error removing name from AsyncStorage', err);
+        }
+      };
     return (
         <SafeAreaView>
             <View style={{ height: deviceHeight }}>
@@ -59,12 +50,13 @@ const Menubar = ({ navigation }) => {
 
 
                     <View style={{ height: "45%" }}>
-                        <View style={{ height: "90%", alignItems: 'center', justifyContent: "center", }}>
+                        <View style={{ height: "200%", width: '100%', alignItems: 'center', alignSelf: "center", justifyContent: "center", }}>
                             <View>
-                                <Image source={{}} style={{ width: 90, height: 90, marginHorizontal: 10, justifyContent: "center", alignSelf: "center" }} />
+                                <Image source={user} style={{ width: 90, height: 90, marginHorizontal: 10, justifyContent: "center", alignSelf: "center" }} />
                             </View>
                             <View style={{ marginTop: 10 }}>
-                                <Text style={{ fontSize: 20, fontWeight: "bold", color: "black", textAlign: "center" }}>Hello! 👋</Text>
+                                <Text style={{ fontSize: 20, fontWeight: "bold", color: "white", textAlign: "center" }}>Hello!</Text>
+                                <Text style={{ fontSize: 20, fontWeight: "bold", color: "white", textAlign: "center" }}>{name}</Text>
 
                             </View>
                         </View>
@@ -76,7 +68,7 @@ const Menubar = ({ navigation }) => {
                 <View style={{ backgroundColor: "#f2f2f2", marginTop: 30 }}>
                     <View style={{ backgroundColor: "white", width: "95%", alignSelf: "center", borderRadius: 20, padding: 10 }}>
 
-                        <TouchableOpacity onPress={() => reminder()}>
+                        <TouchableOpacity >
                             <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 13, borderBottomWidth: 0.5, borderBottomColor: "lightgray" }}>
                                 <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                                     <Icon3 name="notifications-outline" size={25} color='black' />
@@ -87,7 +79,7 @@ const Menubar = ({ navigation }) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => chat()}>
+                        <TouchableOpacity >
                             <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 13, borderBottomWidth: 0.5, borderBottomColor: "lightgray" }}>
                                 <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                                     <Icon4 name="chat" size={23} color='black' />
@@ -99,7 +91,7 @@ const Menubar = ({ navigation }) => {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={community}>
+                        <TouchableOpacity >
                             <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 13, }}>
                                 <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                                     <Icon7 name="team" size={25} color='black' />
@@ -111,7 +103,7 @@ const Menubar = ({ navigation }) => {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={logOut}>
+                    <TouchableOpacity onPress={handleLogout}>
                         <View style={{ padding: 13, backgroundColor: "white", width: "95%", marginTop: 30, alignSelf: "center", borderRadius: 20, }}>
                             <View style={{ justifyContent: "center", alignItems: "center", textAlign: "center" }}>
                                 <Text style={{ color: "red", textAlign: "center", paddingLeft: 10, fontSize: 17, fontWeight: "bold" }}>Log Out</Text>
@@ -119,7 +111,7 @@ const Menubar = ({ navigation }) => {
                         </View>
                     </TouchableOpacity>
                     <View style={{ marginTop: 15 }}>
-                        <Text style={{ textAlign: "center", color: "black" }}>DFS+   ❤️</Text>
+                        <Text style={{ textAlign: "center", color: "black" }}>Agni Nirikshak ❤️</Text>
                         <Text style={{ textAlign: "center", color: "black" }}>V 1.0.0 (Testing)</Text>
                     </View>
                 </View>

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity,TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { RoleContext } from '../../context/RoleProvider';
     
     export default UserHome = () => {
+      const { role, setRole } = useContext(RoleContext); // Access role and setRole from context
         const navigation = useNavigation();
         const Menubar = () => {
             navigation.navigate("Menubar")
@@ -15,8 +16,7 @@ import { ScrollView } from 'react-native-gesture-handler';
         }
         const handleLogout = () => {
             setRole(null);
-            setEmail('');
-            setPassword('');
+          
         };
       return (
         <View style={styles.dashboardContainer}>

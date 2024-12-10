@@ -15,7 +15,7 @@ const SplashScreen = ({ navigation }) => {
     const get_name = async () => {
         let name = await AsyncStorage.getItem('name')
         if (name) {
-            navigation.replace("Home", { name })
+            navigation.replace("DeptHome", { name })
         } else {
             navigation.replace("Login")
         }

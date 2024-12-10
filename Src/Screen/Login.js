@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,104 +7,77 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
-import { RoleContext } from './RoleContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeptHome from './DeptScreen/DeptHome.js';
+import logo from '../assets/logo.png';
+import { deviceWidth } from '../Dimensions.js';
 
 const { width } = Dimensions.get('window');
 
 const Login = () => {
-  const { role, setRole } = useContext(RoleContext); // Access role and setRole from context
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [activeTab, setActiveTab] = useState('Individual User');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Check if name exists in AsyncStorage on component mount
+  useEffect(() => {
+    const checkNameInStorage = async () => {
+      try {
+        const storedName = await AsyncStorage.getItem('name');
+        if (storedName) {
+          setIsAuthenticated(true);
+        }
+      } catch (err) {
+        console.error('Error retrieving name from AsyncStorage', err);
+      }
+    };
+    checkNameInStorage();
+  }, []);
 
   // Handle Login
-  const handleLogin = () => {
-    if (activeTab === 'Individual User') {
-      setRole('user');
-    } else if (activeTab === 'Department Admin') {
-      setRole('inspector');
+  const handleLogin = async () => {
+    try {
+      await AsyncStorage.setItem('name', name);
+      setIsAuthenticated(true);
+    } catch (err) {
+      console.error('Error storing name to AsyncStorage', err);
     }
   };
 
-  // Logout Handler
-  const handleLogout = () => {
-    setRole(null); // Clear role
-    setEmail('');
-    setPassword('');
-  };
+  if (isAuthenticated) {
+    return <DeptHome />;
+  }
 
-  // User UI
-  const UserUI = () => (
-    <View style={styles.uiContainer}>
-      <Text style={styles.uiText}>Welcome, User!</Text>
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-  // Inspector UI
-  const InspectorUI = () => (
-    <View style={styles.uiContainer}>
-      <Text style={styles.uiText}>Welcome, Fire Inspector!</Text>
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-  // Login Screen
-  const LoginScreen = () => (
-    <View style={styles.container}>
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       {/* Logo Section */}
-      <Image
-        source={{
-          uri: 'https://via.placeholder.com/500x200?text=Your+Logo',
-        }}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+      <Image source={logo} style={styles.logo} resizeMode="contain" />
 
-      {/* Tab Selection */}
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[styles.tab, activeTab === 'Individual User' && styles.activeTab]}
-          onPress={() => setActiveTab('Individual User')}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === 'Individual User' && styles.activeTabText,
-            ]}
-          >
-            Individual User
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tab, activeTab === 'Department Admin' && styles.activeTab]}
-          onPress={() => setActiveTab('Department Admin')}
-        >
-          <Text
-            style={[
-              styles.tabText,
-              activeTab === 'Department Admin' && styles.activeTabText,
-            ]}
-          >
-            Department Admin
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.title}>Inspector Login</Text>
 
       {/* Input Fields */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
+          placeholder="Name"
+          value={name}
+          onChangeText={setName}
+          placeholderTextColor="#5E2129"
+        />
+        <TextInput
+          style={styles.input}
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
-          keyboardType="email-address"
+          placeholderTextColor="#5E2129"
         />
         <View style={styles.passwordContainer}>
           <TextInput
@@ -113,6 +86,7 @@ const Login = () => {
             secureTextEntry={!passwordVisible}
             value={password}
             onChangeText={setPassword}
+            placeholderTextColor="#5E2129"
           />
           <TouchableOpacity
             onPress={() => setPasswordVisible(!passwordVisible)}
@@ -131,15 +105,7 @@ const Login = () => {
       <TouchableOpacity style={styles.forgotPasswordButton}>
         <Text style={styles.forgotPasswordText}>Forgot password</Text>
       </TouchableOpacity>
-    </View>
-  );
-
-  return (
-    <>
-      {role === 'user' && <UserUI />}
-      {role === 'inspector' && <InspectorUI />}
-      {!role && <LoginScreen />}
-    </>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -149,35 +115,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8E6E6',
     alignItems: 'center',
     padding: 16,
+    paddingTop: 120,
   },
   logo: {
     width: width * 0.8,
     height: 150,
     marginBottom: 20,
   },
-  tabContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#F5E6E6',
-    borderRadius: 10,
-    marginBottom: 20,
-    overflow: 'hidden',
-  },
-  tab: {
-    flex: 1,
-    padding: 10,
-    alignItems: 'center',
-  },
-  activeTab: {
-    backgroundColor: '#5E2129',
-  },
-  tabText: {
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
     color: '#5E2129',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  activeTabText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
+    marginBottom: 20,
   },
   inputContainer: {
     width: '100%',
@@ -191,6 +140,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 10,
     color: '#5E2129',
+    width: deviceWidth - 35,
+    fontSize: 20,
   },
   passwordContainer: {
     flexDirection: 'row',
@@ -202,51 +153,31 @@ const styles = StyleSheet.create({
     right: 16,
   },
   signInButton: {
+    backgroundColor: '#FF0000',
+    width: '100%',
+    paddingVertical: 14,
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  signInText: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: '600',
+  },
+  forgotPasswordButton: {
     backgroundColor: '#F5E6E6',
     width: '100%',
     paddingVertical: 14,
     alignItems: 'center',
     borderRadius: 10,
     marginBottom: 10,
-  },
-  signInText: {
-    fontSize: 16,
-    color: '#5E2129',
-    fontWeight: '600',
-  },
-  forgotPasswordButton: {
-    backgroundColor: '#FF0000',
-    width: '100%',
-    paddingVertical: 14,
-    alignItems: 'center',
-    borderRadius: 10,
+    borderColor: '#5E2129',
+    borderWidth: 1,
+    marginTop: 18,
   },
   forgotPasswordText: {
     fontSize: 16,
-    color: '#FFFFFF',
-    fontWeight: '600',
-  },
-  uiContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F8E6E6',
-  },
-  uiText: {
-    fontSize: 24,
-    fontWeight: 'bold',
     color: '#5E2129',
-    marginBottom: 20,
-  },
-  logoutButton: {
-    backgroundColor: '#FF0000',
-    paddingVertical: 14,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-  },
-  logoutText: {
-    color: '#FFFFFF',
-    fontSize: 16,
     fontWeight: '600',
   },
 });
