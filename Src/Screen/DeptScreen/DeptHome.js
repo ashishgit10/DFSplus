@@ -13,13 +13,12 @@ import Navbar from './Navbar';
 
 
 
-
 // Mock Data for Applications
 const mockApplications = [
-  { id: '1234', status: 'Pending', name: 'Ritika Prasad' },
-  { id: '1235', status: 'Inspected', name: 'Brijmohan Gupta' },
-  { id: '1236', status: 'Approved', name: 'Vikash Shah' },
-  { id: '1237', status: 'Rejected', name: 'Kartik Kumar' },
+  { id: '1234', status: 'Pending', name: 'Alex Smith' },
+  { id: '1235', status: 'Inspected', name: 'Bella Johnson' },
+  { id: '1236', status: 'Approved', name: 'Charlie Brown' },
+  { id: '1237', status: 'Rejected', name: 'Diana Prince' },
 ];
 const Tab = [
   { id: '1', name: 'Home', icon: '🏠' },
@@ -91,8 +90,6 @@ const InspectorPortalHome = ({ navigation }) => {
           </TouchableOpacity>
         ))}
       </View>
-
-   {/*    <Camera/> */}
       {/* Applications List */}
       <FlatList
         data={filteredApplications}
@@ -123,7 +120,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8E6E6',
-
+  
   },
   title: {
     fontSize: 24,
