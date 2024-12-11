@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, Image, ImageBackground, TouchableOpacity, Sta
 
 import Icon2 from "react-native-vector-icons/MaterialIcons"
 import Icon3 from "react-native-vector-icons/Ionicons"
-import Icon4 from "react-native-vector-icons/MaterialIcons"
+import Icon4 from "react-native-vector-icons/AntDesign"
 
 import Icon7 from "react-native-vector-icons/AntDesign"
 import user from "../../assets/user.png"
@@ -72,7 +72,7 @@ const Menubar = () => {
                             <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 13, borderBottomWidth: 0.5, borderBottomColor: "lightgray" }}>
                                 <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                                     <Icon3 name="notifications-outline" size={25} color='black' />
-                                    <Text style={{ color: "black", textAlign: "center", paddingLeft: 10, fontSize: 17 }}>Reminders</Text>
+                                    <Text style={{ color: "black", textAlign: "center", paddingLeft: 10, fontSize: 17 }}>Notification</Text>
                                 </View>
                                 <View>
                                     <Icon2 name="keyboard-arrow-right" size={25} color='black' />
@@ -82,8 +82,8 @@ const Menubar = () => {
                         <TouchableOpacity >
                             <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 13, borderBottomWidth: 0.5, borderBottomColor: "lightgray" }}>
                                 <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                                    <Icon4 name="chat" size={23} color='black' />
-                                    <Text style={{ color: "black", textAlign: "center", paddingLeft: 10, fontSize: 17 }}>Chat & Support</Text>
+                                    <Icon4 name="profile" size={23} color='black' />
+                                    <Text style={{ color: "black", textAlign: "center", paddingLeft: 10, fontSize: 17 }}>Profile</Text>
                                 </View>
                                 <View>
                                     <Icon2 name="keyboard-arrow-right" size={25} color='black' />
@@ -94,7 +94,7 @@ const Menubar = () => {
                         <TouchableOpacity >
                             <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 13, }}>
                                 <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                                    <Icon7 name="team" size={25} color='black' />
+                                    <Icon7 name="setting" size={25} color='black' />
                                     <Text style={{ color: "black", textAlign: "center", paddingLeft: 10, fontSize: 17 }}>Setting</Text>
                                 </View>
                                 <View>

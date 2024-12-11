@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, TextInput, StyleSheet } from 'react-native';
 
-
 const InspectionForm = () => {
   const [formData, setFormData] = useState({
     buildingName: '',
@@ -15,7 +14,7 @@ const InspectionForm = () => {
     officerDesignation: '',
     constructionYear: '',
     applicantLetterNo: '',
-    standards: Array(20).fill({
+    standards: Array(8).fill({
       title: '',
       requirements: Array(5).fill({ requirement: '', provided: '', remarks: '' }),
     }),
@@ -44,17 +43,61 @@ const InspectionForm = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>INSPECTION REPORT</Text>
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="1. Name & address of the building" onChangeText={(text) => handleInputChange('buildingName', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="2. Building is comprised of" onChangeText={(text) => handleInputChange('buildingComposition', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="3. Type of Occupancy" onChangeText={(text) => handleInputChange('occupancyType', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="4. Type of Case" onChangeText={(text) => handleInputChange('caseType', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="5. Details of Previous NOC letter" onChangeText={(text) => handleInputChange('nocDetails', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="6. Fire Safety direction letter No" onChangeText={(text) => handleInputChange('fireSafetyLetter', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="7. Date of Inspection" onChangeText={(text) => handleInputChange('inspectionDate', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="8. Name of the Inspecting officers" onChangeText={(text) => handleInputChange('inspectingOfficers', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="9. Name and designation of Officer from the building side" onChangeText={(text) => handleInputChange('officerDesignation', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="10. Year of Construction" onChangeText={(text) => handleInputChange('constructionYear', text)} />
-      <TextInput style={styles.input} placeholderTextColor="gray" placeholder="11. Applicant’s letter No" onChangeText={(text) => handleInputChange('applicantLetterNo', text)} />
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>1. Name & address of the building</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter building name" onChangeText={(text) => handleInputChange('buildingName', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>2. Building is comprised of</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter building composition" onChangeText={(text) => handleInputChange('buildingComposition', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>3. Type of Occupancy</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter occupancy type" onChangeText={(text) => handleInputChange('occupancyType', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>4. Type of Case</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter case type" onChangeText={(text) => handleInputChange('caseType', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>5. Details of Previous NOC letter</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter NOC details" onChangeText={(text) => handleInputChange('nocDetails', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>6. Fire Safety direction letter No</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter fire safety letter" onChangeText={(text) => handleInputChange('fireSafetyLetter', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>7. Date of Inspection</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter inspection date" onChangeText={(text) => handleInputChange('inspectionDate', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>8. Name of the Inspecting officers</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter inspecting officers" onChangeText={(text) => handleInputChange('inspectingOfficers', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>9. Name and designation of Officer from the building side</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter officer designation" onChangeText={(text) => handleInputChange('officerDesignation', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>10. Year of Construction</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter construction year" onChangeText={(text) => handleInputChange('constructionYear', text)} />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>11. Applicant’s letter No</Text>
+        <TextInput style={styles.input} placeholderTextColor="gray" placeholder="Enter applicant's letter number" onChangeText={(text) => handleInputChange('applicantLetterNo', text)} />
+      </View>
 
       {formData.standards.map((standard, index) => (
         <View key={index} style={styles.standardContainer}>
@@ -71,7 +114,9 @@ const InspectionForm = () => {
         </View>
       ))}
 
-      {/*       <Button title="Submit" onPress={handleSubmit} /> */}
+      <View style={styles.submitButtonContainer}>
+        {/* <Button title="Submit" onPress={handleSubmit} /> */}
+      </View>
     </ScrollView>
   );
 };
@@ -85,6 +130,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     textAlign: 'center',
+    color: "black",
+  },
+  inputGroup: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: 'black',
   },
   input: {
     borderWidth: 1,
@@ -102,6 +156,10 @@ const styles = StyleSheet.create({
   },
   requirementContainer: {
     marginBottom: 10,
+  },
+  submitButtonContainer: {
+    alignItems: 'center',
+    marginTop: 20,
   },
 });
 
